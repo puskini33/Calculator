@@ -1,6 +1,6 @@
 class Production(object):
 
-    def analyze(self):
+    def analyze(self, world_state):
         pass
 
 
@@ -17,6 +17,16 @@ class Operation(Production):
     def analyze(self, world_state):
         pass
 
+    def interpret(self, world_state):
+        left = self.first_element.interpret(world_state)
+        right = self.second_element.interpret(world_state)
+        operator = self.operator.interpret(world_state)
+        return self.calculate(left, right, operator)
+
+    def calculate(self, left, right, operator):
+        if operator == 'add':
+            addition = left + right
+            return left + right
 
 class VariableDefinition(Production):
 
@@ -48,21 +58,24 @@ class ComplexVariableDefinition(Production):
         return f'VariableDefinition({self.name}{self.equal}{self.first_variable}{self.plus}{self.second_variable})'
 
     def analyze(self, world_state):
-        self.first_variable.analyze()
-        self.second_variable.analyze()
-        self.name.analyze()
+        self.first_variable.analyze(world_state)
+        self.second_variable.analyze(world_state)
+        self.name.analyze(world_state)
 
 
 class Integer(Production):
 
     def __init__(self, element):
-        self.element = element[1]
+        self.element = int(element[1])
 
     def __repr__(self):
         return f'Integer({self.element})'
 
     def analyze(self, world_state):
         pass
+
+    def interpret(self, world_state):
+        return self.element
 
 
 class VariableName(Production):
@@ -77,7 +90,7 @@ class VariableName(Production):
         world_state.variables[self.name] = self
 
 
-class Operator(Production):
+class Plus(Production):
 
     def __init__(self, type_operator):
         self.type_operator = type_operator[1]
@@ -87,6 +100,9 @@ class Operator(Production):
 
     def analyze(self, world_state):
         pass
+
+    def interpret(self, world_state):
+        return 'add'
 
 
 class Equal(Production):

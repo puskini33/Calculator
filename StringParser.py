@@ -1,7 +1,9 @@
 from StringScanner import Scanner
+from StringAnalyzer import Analyzer
 import grammar_productions as prod
-from sys import exit
 
+from sys import exit
+# TODO: Figure it out scope
 
 class Parser(object):
 
@@ -31,10 +33,9 @@ class Parser(object):
         first_element_parsed = self.parse_integer()
         operation = self.local_scanner.peek()
         self._parse_error(operation)
-        if operation == 'PLUS':
-            operation_parsed = self.parse_operator()
+        operation_parsed = self.parse_operator()
         second_element_parsed = self.parse_integer()
-        equal_parsed = self.parse_equal()
+        self.parse_equal()
         return prod.Operation(first_element_parsed, second_element_parsed, operation_parsed)
 
     def parse_variable_definition(self):
@@ -52,7 +53,6 @@ class Parser(object):
         second_variable_name = self.parse_variable_name()
         return prod.ComplexVariableDefinition(variable, equal, first_variable_name, plus, second_variable_name)
 
-
     def parse_integer(self):
         integer = self.local_scanner.match('INTEGER')
         self._parse_error(integer)
@@ -66,7 +66,7 @@ class Parser(object):
     def parse_operator(self):
         operator_sign = self.local_scanner.match('PLUS')
         self._parse_error(operator_sign)
-        return prod.Operator(operator_sign)
+        return prod.Plus(operator_sign)
 
     def parse_equal(self):
         equal = self.local_scanner.match('EQUAL')
@@ -89,7 +89,7 @@ class WorldState(object):
 
 
 
-code = ["x = 10", "y = 11", "j = x + y", "1 + 2 ="]
+code = ["1 + 2 ="]
 
 TOKENS = [
             ((r"^[0-9]+"),                 "INTEGER"),
@@ -103,7 +103,7 @@ local_parser = Parser(local_scanner)
 parse_tree = local_parser.main()
 world_state = WorldState()
 print(parse_tree)
-local_analyzer = Analyzer(world_state)
-analyzed_tree = local_analyzer.analyze()
+local_analyzer = Analyzer(parse_tree)
+analyzed_tree = local_analyzer.analyze(world_state)
 for element in analyzed_tree:
     element.intrepret(world_state)
