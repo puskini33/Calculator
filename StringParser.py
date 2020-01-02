@@ -36,7 +36,7 @@ class Parser(object):
         operation_parsed = self.parse_operator()
         second_element_parsed = self.parse_integer()
         self.parse_equal()
-        return prod.Operation(first_element_parsed, second_element_parsed, operation_parsed)
+        return prod.AddExpression(first_element_parsed, second_element_parsed)
 
     def parse_variable_definition(self):
         first_element_parsed = self.parse_variable_name()
@@ -72,38 +72,3 @@ class Parser(object):
         equal = self.local_scanner.match('EQUAL')
         self._parse_error(equal)
         return prod.Equal(equal)
-
-    def main(self):
-        result = []
-        while not self.local_scanner.done():
-            result.append(self.root())
-
-        return result
-
-
-class WorldState(object):
-
-    def __init__(self):
-        self.variables = {}
-
-
-
-
-code = ["1 + 2 ="]
-
-TOKENS = [
-            ((r"^[0-9]+"),                 "INTEGER"),
-            ((r"^\+"),                     "PLUS"),
-            ((r"\s"),                      "SPACE"),
-            ((r"\="),                      "EQUAL"),
-            ((r"[a-z]"),                   "VARIABLE")]
-
-local_scanner = Scanner(TOKENS, code)
-local_parser = Parser(local_scanner)
-parse_tree = local_parser.main()
-world_state = WorldState()
-print(parse_tree)
-local_analyzer = Analyzer(parse_tree)
-analyzed_tree = local_analyzer.analyze(world_state)
-for element in analyzed_tree:
-    element.intrepret(world_state)

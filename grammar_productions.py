@@ -3,30 +3,26 @@ class Production(object):
     def analyze(self, world_state):
         pass
 
+    def interpret(self, world_state):
+        pass
 
-class Operation(Production):
 
-    def __init__(self, first_element, second_element, operator):
+class AddExpression(Production):
+
+    def __init__(self, first_element, second_element):
         self.first_element = first_element
         self.second_element = second_element
-        self.operator = operator
 
     def __repr__(self):
-        return f'Operation({self.first_element} {self.operator} {self.second_element})'
+        return f'AddExpression({self.first_element}, {self.second_element})'
 
     def analyze(self, world_state):
         pass
 
     def interpret(self, world_state):
-        left = self.first_element.interpret(world_state)
-        right = self.second_element.interpret(world_state)
-        operator = self.operator.interpret(world_state)
-        return self.calculate(left, right, operator)
-
-    def calculate(self, left, right, operator):
-        if operator == 'add':
-            addition = left + right
-            return left + right
+        addition = self.first_element.interpret(world_state) + self.second_element.interpret(world_state)
+        print(addition)
+        return addition
 
 class VariableDefinition(Production):
 
@@ -93,7 +89,7 @@ class VariableName(Production):
 class Plus(Production):
 
     def __init__(self, type_operator):
-        self.type_operator = type_operator[1]
+        self.type_operator = type_operator[1]  # 'PLUS'
 
     def __repr__(self):
         return f'{self.type_operator}'
