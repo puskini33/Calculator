@@ -7,22 +7,20 @@ class Production(object):
         pass
 
 
-class AddExpression(Production):
+class Operation(Production):
 
-    def __init__(self, first_element, second_element):
-        self.first_element = first_element
-        self.second_element = second_element
+    def __init__(self, type_operation):
+        self.type_operation = type_operation
 
     def __repr__(self):
-        return f'AddExpression({self.first_element}, {self.second_element})'
+        return f'Operation({self.type_operation})'
 
     def analyze(self, world_state):
         pass
 
     def interpret(self, world_state):
-        addition = self.first_element.interpret(world_state) + self.second_element.interpret(world_state)
-        print(addition)
-        return addition
+        return self.type_operation.interpret(world_state)
+
 
 class VariableDefinition(Production):
 
@@ -86,19 +84,94 @@ class VariableName(Production):
         world_state.variables[self.name] = self
 
 
-class Plus(Production):
+class SubtractExpression(Production):
 
-    def __init__(self, type_operator):
-        self.type_operator = type_operator[1]  # 'PLUS'
+    def __init__(self, left_number, right_number):
+        self.left_number = left_number  # 'MINUS'
+        self.right_number = right_number
 
     def __repr__(self):
-        return f'{self.type_operator}'
+        return f'SubtractExpression({self.left_number}, {self.right_number})'
 
     def analyze(self, world_state):
         pass
 
     def interpret(self, world_state):
-        return 'add'
+        substraction = self.left_number.interpret(world_state) - self.right_number.interpret(world_state)
+        print(substraction)
+        return substraction
+
+
+class AddExpression(Production):
+
+    def __init__(self, left_number, right_number):
+        self.left_number = left_number
+        self.right_number = right_number
+
+    def __repr__(self):
+        return f'AddExpression({self.left_number}, {self.right_number})'
+
+    def analyze(self, world_state):
+        pass
+
+    def interpret(self, world_state):
+        addition = self.left_number.interpret(world_state) + self.right_number.interpret(world_state)
+        print(addition)
+        return addition
+
+
+class DivideExpression(Production):
+
+    def __init__(self, left_number, right_number):
+        self.left_number = left_number
+        self.right_number = right_number
+
+    def __repr__(self):
+        return f'DivideExpression({self.left_number}, {self.right_number})'
+
+    def analyze(self, world_state):
+        pass
+
+    def interpret(self, world_state):
+        division = self.left_number.interpret(world_state) / self.right_number.interpret(world_state)
+        print(division)
+        return division
+
+
+class MultiplyExpression(Production):
+
+    def __init__(self, left_number, right_number):
+        self.left_number = left_number
+        self.right_number = right_number
+
+    def __repr__(self):
+        return f'MultiplyExpression({self.left_number}, {self.right_number})'
+
+    def analyze(self, world_state):
+        pass
+
+    def interpret(self, world_state):
+        multiplication = self.left_number.interpret(world_state) * self.right_number.interpret(world_state)
+        print(multiplication)
+        return multiplication
+
+
+class ModuloExpression(Production):
+
+    def __init__(self, left_number, right_number):
+        self.left_number = left_number
+        self.right_number = right_number
+
+    def __repr__(self):
+        return f'ModuloExpression({self.left_number}, {self.right_number})'
+
+    def analyze(self, world_state):
+        pass
+
+    def interpret(self, world_state):
+        modulo = self.left_number.interpret(world_state) % self.right_number.interpret(world_state)
+        print(modulo)
+        return modulo
 
 
 class Equal(Production):

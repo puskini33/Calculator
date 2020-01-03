@@ -3,7 +3,7 @@ from StringAnalyzer import Analyzer
 import grammar_productions as prod
 
 from sys import exit
-# TODO: Figure it out scope
+
 
 class Parser(object):
 
@@ -21,7 +21,7 @@ class Parser(object):
             return
 
     def root(self):
-        """root = operation"""
+        """root = operation/ variable_definition"""
         first_element = self.local_scanner.peek()
         self._parse_error(first_element)
         if first_element == 'INTEGER':
@@ -30,13 +30,12 @@ class Parser(object):
             return self.parse_variable_definition()
 
     def parse_tree_operation(self):
+        """operation = integer operation integer"""
         first_element_parsed = self.parse_integer()
-        operation = self.local_scanner.peek()
-        self._parse_error(operation)
-        operation_parsed = self.parse_operator()
-        second_element_parsed = self.parse_integer()
-        self.parse_equal()
-        return prod.AddExpression(first_element_parsed, second_element_parsed)
+        operator = self.local_scanner.peek()
+        self._parse_error(operator)
+        operation_parsed = self.parse_operation(first_element_parsed)
+        return prod.Operation(operation_parsed)
 
     def parse_variable_definition(self):
         first_element_parsed = self.parse_variable_name()
@@ -49,7 +48,7 @@ class Parser(object):
 
     def parse_complex_variable_definition(self, variable, equal):
         first_variable_name = self.parse_variable_name()
-        plus = self.parse_operator()
+        # plus = self.parse_operation()
         second_variable_name = self.parse_variable_name()
         return prod.ComplexVariableDefinition(variable, equal, first_variable_name, plus, second_variable_name)
 
@@ -63,10 +62,36 @@ class Parser(object):
         self._parse_error(name_variable)
         return prod.VariableName(name_variable)
 
-    def parse_operator(self):
-        operator_sign = self.local_scanner.match('PLUS')
-        self._parse_error(operator_sign)
-        return prod.Plus(operator_sign)
+    def parse_operation(self, left_number):
+        peek_operator_sign = self.local_scanner.peek()
+        self._parse_error(peek_operator_sign)
+        print(peek_operator_sign)
+
+        if peek_operator_sign == 'MINUS':
+            operator_sign = self.local_scanner.match('MINUS')
+            right_number = self.parse_integer()
+            self.parse_equal()
+            return prod.SubtractExpression(left_number, right_number)
+        elif peek_operator_sign == 'PLUS':
+            operator_sign = self.local_scanner.match('PLUS')
+            right_number = self.parse_integer()
+            self.parse_equal()
+            return prod.AddExpression(left_number, right_number)
+        elif peek_operator_sign == 'DIVISION SIGN':
+            operator_sign = self.local_scanner.match('DIVISION SIGN')
+            right_number = self.parse_integer()
+            self.parse_equal()
+            return prod.DivideExpression(left_number, right_number)
+        elif peek_operator_sign == 'TIMES SIGN':
+            operator_sign = self.local_scanner.match('TIMES SIGN')
+            right_number = self.parse_integer()
+            self.parse_equal()
+            return prod.MultiplyExpression(left_number, right_number)
+        elif peek_operator_sign == 'MODULO SIGN':
+            operator_sign = self.local_scanner.match('MODULO SIGN')
+            right_number = self.parse_integer()
+            self.parse_equal()
+            return prod.ModuloExpression(left_number, right_number)
 
     def parse_equal(self):
         equal = self.local_scanner.match('EQUAL')

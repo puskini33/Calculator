@@ -38,7 +38,7 @@ class Scanner(object):
                 return token, start[:end], end  # return TOKEN
         return None, start, None
 
-    def match(self, token_id: str) -> list:
+    def match(self, token_id: str) -> list or str:
         """Given a list of possible tokens, returns the first one that matches the first token in the list
     and removes it."""
         while token_id == 'SPACE':
@@ -68,7 +68,7 @@ class Scanner(object):
         while self.list_tokens[0][0] == 'SPACE':
             self.list_tokens.pop(0)
 
-    def skip(self, *what: tuple) -> bool:
+    def skip(self, *what: tuple or str) -> bool:
         """Function evaluates if first element in the given list of tokens equals the first element
         in the list of tokens of the object. If YES, it returns TRUE, if NOT, it pops the first element and
         tries again, and returns False if also first new element does not match."""
