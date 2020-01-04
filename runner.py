@@ -52,7 +52,7 @@ class WorldState(object):
         self.variables = {}
 
 
-code = ["1 * 2 ="]
+code = ["1 * 2"]
 
 TOKENS = [
         ((r"^[0-9]+"),                 "INTEGER"),
