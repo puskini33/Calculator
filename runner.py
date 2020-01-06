@@ -1,30 +1,8 @@
-from StringScanner import Scanner
+from string_scanner.scanner import Scanner
 from StringParser import Parser
 from StringAnalyzer import Analyzer
 from StringInterpreter import Interpreter
-
-
-class SetupScanner(object):
-    """docstring for LocalScanner"""
-    def __init__(self, regex_rules, text_to_match):
-        self.regex_rules = regex_rules
-        self.text_to_match = text_to_match
-        self.scanned_tree = Scanner(regex_rules, text_to_match)
-
-
-class SetupParser(object):
-
-    def __init__(self, scanned_tree):
-        self.scanned_tree = scanned_tree
-        self.local_parser = Parser(self.scanned_tree)
-
-    def parse(self):
-        result = []  # parse_tree
-        while not self.scanned_tree.done():
-            result.append(self.local_parser.root())
-
-        return result
-
+from regex_tokens.regex_rules import RegexRules
 
 class SetupAnalyzer(object):
 
@@ -54,22 +32,16 @@ class WorldState(object):
 
 code = ["1 * 2"]
 
-TOKENS = [
-        ((r"^[0-9]+"),                 "INTEGER"),
-        ((r"^\+"),                     "PLUS"),
-        ((r"-"),                       "MINUS"),
-        ((r"\/"),                       "DIVISION SIGN"),
-        ((r"\*"),                      "TIMES SIGN"),
-        ((r"%"),                       "MODULO SIGN"),
-        ((r"\s"),                      "SPACE"),
-        ((r"\="),                      "EQUAL"),
-        ((r"[a-z]"),                   "VARIABLE")]
+local_regex_rules = RegexRules()
 
-setup_scanner = SetupScanner(TOKENS, code)
+setup_scanner = Scanner(local_regex_rules.list_regex_rules, code)
 
-setup_parser = SetupParser(setup_scanner.scanned_tree)
+setup_parser = Parser(setup_scanner)
 parsed_string = setup_parser.parse()
 print(parsed_string)
+
+
+
 
 world_state = WorldState()
 

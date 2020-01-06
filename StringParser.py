@@ -1,5 +1,3 @@
-from StringScanner import Scanner
-from StringAnalyzer import Analyzer
 import grammar_productions as prod
 
 from sys import exit
@@ -12,6 +10,14 @@ class Parser(object):
         a parse tree."""
         self.local_scanner = local_scanner  # the Parser object is passed
 
+    def parse(self):
+        """Function parses the scanned tree and returns the parsed tree."""
+        result = []  # parse_tree
+        while not self.local_scanner.done():
+            result.append(self.parse_operation())
+
+        return result
+
     def _parse_error(self, match):
         """Function verifies the grammar of the string. If there is an error, the program is terminated."""
         if not match or match == 'ERROR':
@@ -19,15 +25,6 @@ class Parser(object):
             exit(1)
         else:
             return
-
-    def root(self):
-        """root = operation/ variable_definition"""
-        first_element = self.local_scanner.peek()
-        self._parse_error(first_element)
-        if first_element == 'INTEGER':
-            return self.parse_operation()
-        elif first_element == 'VARIABLE':
-            return self.parse_variable_definition()
 
     def parse_operation(self):
         """operation = integer operator integer (equal)/ variable_symbol operator variable_symbol"""

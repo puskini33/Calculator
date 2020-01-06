@@ -11,7 +11,7 @@
   * [StringInterpreter.py](#interpreter)
 * [License](#license)
 
-## General Information
+## [General Information]
 In this repository there is a simple calculator that takes as input an operation and outputs the result of the operation.
 
 For example, given the operation "3 * 6 =" this is a multiplication operation. The result of this operation is 18. The result is printed in the console.
