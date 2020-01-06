@@ -1,6 +1,6 @@
 import re
 from sys import exit
-from string_scanner.scanner_string_segment import ScanedStringSegment
+from string_scanner.scanner_string_segment import ScannedStringSegment
 
 class Scanner(object):
 
@@ -11,17 +11,24 @@ class Scanner(object):
         self.scan()
 
     def scan(self):
+        try:
+            assert self.text_to_match  # TODO: Normally is text_to_match is empty, a SyntaxError is raised. Is it OK how I did here?
+        except AssertionError:
+            print('Please introduce an operation to calculate.')
+            exit(1)
+
         for line in self.text_to_match:  # taking each line from the code to match
             i = 0
             while i < len(line):  # looping till the end of the string is reached
 
-                string_segment = self.try_match(i, line)  # i = 3, line = code[0]
+                string_segment = self.try_match(i, line)
 
-                if string_segment.token:  # if a token is matched
+                try:
+                    assert string_segment.token
                     i += string_segment.end_string  # set the new index to take the unmatched string
                     self.list_tokens.append(string_segment)  # append the found goods
-                else:
-                    print(f'SyntaxError: Unmatched Regex Token  {line[i:]}  at line:  '
+                except AssertionError:
+                    print(f'SyntaxError: Unmatched Syntax -{line[i]}-  at line:  '
                           f'\n{line}')
                     exit(1)
 
@@ -35,8 +42,8 @@ class Scanner(object):
             if match:  # if a match is found
                 begin, end = match.span()  # take the begin and end index
                 """ Span returns a tuple containing the (start, end) positions of the match"""
-                return ScanedStringSegment(token, i, start[:end], end)  # return TOKEN
-        return ScanedStringSegment(None, None, start, None)
+                return ScannedStringSegment(token, i, start[:end], end)  # return TOKEN
+        return ScannedStringSegment(None, None, start, None)
 
     def match(self, token_id: str) -> list or str:
         """Given a list of possible tokens, returns the first one that matches the first token in the list
@@ -64,7 +71,7 @@ class Scanner(object):
             return 'ERROR'
 
     def ignore_ws(self):
-        """Functions pops the INDENT token. The lexical analyser must remove all spaces."""
+        """Functions pops the SPACE token. The lexical analyser must remove all spaces."""
         while self.list_tokens[0].token == 'SPACE':
             self.list_tokens.pop(0)
 

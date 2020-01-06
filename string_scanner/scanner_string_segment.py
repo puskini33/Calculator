@@ -1,4 +1,4 @@
-class ScanedStringSegment(object):
+class ScannedStringSegment(object):
 
     def __init__(self, token, index, start, end):
         self.token = token
@@ -7,4 +7,4 @@ class ScanedStringSegment(object):
         self.end_string = end
 
     def __repr__(self):
-        return f'MatchedStringSegment({self.token}, {self.index}, {self.start_string}, {self.end_string})'
+        return f'ScannedStringSegment({self.token}, {self.index}, {self.start_string}, {self.end_string})'
