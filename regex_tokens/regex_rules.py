@@ -16,4 +16,4 @@ class RegexRules(object):
                 ((r"[a-z]"),                   TokenName.variable.value)]
 
     def add_regex_rule(self, regex: str, token: 'TokenName'):
-        self.list_regex_rules.append((regex, token))
+        self.list_regex_rules.append(((regex), token))
