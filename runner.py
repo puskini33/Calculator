@@ -24,13 +24,8 @@ class SetupInterpreter(object):
         return self.local_interpreter.interpret(local_world_state)
 
 
-class WorldState(object):
 
-    def __init__(self):
-        self.variables = {}
-
-
-code = ["1 * 2"]
+code = []
 
 local_regex_rules = RegexRules()
 

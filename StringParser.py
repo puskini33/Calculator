@@ -13,7 +13,7 @@ class Parser(object):
     def parse(self):
         """Function parses the scanned tree and returns the parsed tree."""
         result = []  # parse_tree
-        while not self.local_scanner.done():
+        while not self.local_scanner.done():  # TODO: ask whether the while loops because the function returns True or False
             result.append(self.parse_operation())
 
         return result
