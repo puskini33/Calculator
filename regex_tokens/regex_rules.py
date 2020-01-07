@@ -2,9 +2,7 @@ from regex_tokens.enum_tokens import TokenName
 
 
 class RegexRules(object):
-
-    def __init__(self):
-        self.list_regex_rules = [
+    list_regex_rules = [
                 ((r"^[0-9]+"),                 TokenName.integer.value),
                 ((r"^\+"),                     TokenName.plus.value),
                 ((r"-"),                       TokenName.minus.value),
@@ -16,4 +14,4 @@ class RegexRules(object):
                 ((r"[a-z]"),                   TokenName.variable.value)]
 
     def add_regex_rule(self, regex: str, token: 'TokenName'):
-        self.list_regex_rules.append(((regex), token))
+        list_regex_rules.append(((regex), token))

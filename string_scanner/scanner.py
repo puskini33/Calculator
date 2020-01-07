@@ -1,6 +1,7 @@
 import re
 from sys import exit
 from string_scanner.scanner_string_segment import ScannedStringSegment
+from regex_tokens.enum_tokens import TokenName
 
 class Scanner(object):
 
@@ -48,10 +49,10 @@ class Scanner(object):
     def match(self, token_id: str) -> list or str:
         """Given a list of possible tokens, returns the first one that matches the first token in the list
     and removes it."""
-        while token_id == 'SPACE':
+        while token_id == TokenName.space.value:
             self.ignore_ws()
 
-        if token_id != 'SPACE':  # lexical analyser eliminates spaces
+        if token_id != TokenName.space.value:  # lexical analyser eliminates spaces
             self.ignore_ws()
 
         try:
@@ -72,7 +73,7 @@ class Scanner(object):
 
     def ignore_ws(self):
         """Functions pops the SPACE token. The lexical analyser must remove all spaces."""
-        while self.list_tokens[0].token == 'SPACE':
+        while self.list_tokens[0].token == TokenName.space.value:
             self.list_tokens.pop(0)
 
     def skip(self, *what: tuple or str) -> bool:
@@ -80,7 +81,7 @@ class Scanner(object):
         in the list of tokens of the object. If YES, it returns TRUE, if NOT, it pops the first element and
         tries again, and returns False if also first new element does not match."""
         for x in what:
-            if x != 'SPACE':
+            if x != TokenName.space.value:
                 self.ignore_ws()
 
             tok = self.list_tokens[0]

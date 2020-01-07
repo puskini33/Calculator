@@ -35,7 +35,7 @@ class Parser(object):
         elif first_element_parsed == 'VARIABLE':
             operation_parsed = self.parse_variable_operation()
 
-        return prod.Operation(operation_parsed)  # TODO: See about the class Operation if sth. should be different there
+        return prod.operation.Operation(operation_parsed)  # TODO: See about the class Operation if sth. should be different there
 
     def parse_integer_operation(self):
         """integer operator integer (equal)"""
@@ -48,7 +48,7 @@ class Parser(object):
         """integer"""
         integer = self.local_scanner.match('INTEGER')
         self._parse_error(integer)
-        return prod.Integer(integer)
+        return prod.integer.Integer(integer)
 
     def parse_variable_operation(self):
         """variable_symbol operator variable_symbol"""
@@ -60,7 +60,15 @@ class Parser(object):
     def parse_variable_name(self):
         name_variable = self.local_scanner.match('VARIABLE')
         self._parse_error(name_variable)
-        return prod.VariableName(name_variable)
+        return prod.variable_name.VariableName(name_variable)
+
+    def parse_equal(self):
+        if self.local_scanner.peek() == 'EQUAL':
+            equal = self.local_scanner.match('EQUAL')
+            self._parse_error(equal)
+            return prod.equal.Equal(equal)
+        else:
+            return
 
     def evaluate_type_operation(self, operator, left_element):
         """integer operator integer (equal)"""
@@ -70,69 +78,52 @@ class Parser(object):
             if right_element_peek == 'INTEGER':
                 right_integer = self.parse_integer()
                 self.parse_equal()
-                return prod.SubtractExpression(left_element, right_integer)
+                return prod.subtract_expression.SubtractExpression(left_element, right_integer)
             elif right_element_peek == 'VARIABLE':
                 right_variable = self.parse_variable_name()
                 self.parse_equal()
-                return prod.SubtractExpression(left_element, right_variable)
+                return prod.subtract_expression.SubtractExpression(left_element, right_variable)
         elif operator == 'PLUS':
             operator_sign = self.local_scanner.match('PLUS')
             right_element_peek = self.local_scanner.peek()
             if right_element_peek == 'INTEGER':
                 right_integer = self.parse_integer()
                 self.parse_equal()
-                return prod.AddExpression(left_element, right_integer)
+                return prod.add_expression.AddExpression(left_element, right_integer)
             elif right_element_peek == 'VARIABLE':
                 right_variable = self.parse_variable_name()
                 self.parse_equal()
-                return prod.AddExpression(left_element, right_variable)
+                return prod.add_expression.AddExpression(left_element, right_variable)
         elif operator == 'DIVISION SIGN':
             operator_sign = self.local_scanner.match('DIVISION SIGN')
             right_element_peek = self.local_scanner.peek()
             if right_element_peek == 'INTEGER':
                 right_integer = self.parse_integer()
                 self.parse_equal()
-                return prod.DivideExpression(left_element, right_integer)
+                return prod.divide_expression.DivideExpression(left_element, right_integer)
             elif right_element_peek == 'VARIABLE':
                 right_variable = self.parse_variable_name()
                 self.parse_equal()
-                return prod.DivideExpression(left_element, right_variable)
+                return prod.divide_expression.DivideExpression(left_element, right_variable)
         elif operator == 'TIMES SIGN':
             operator_sign = self.local_scanner.match('TIMES SIGN')
             right_element_peek = self.local_scanner.peek()
             if right_element_peek == 'INTEGER':
                 right_integer = self.parse_integer()
                 self.parse_equal()
-                return prod.MultiplyExpression(left_element, right_integer)
+                return prod.multiply_expression.MultiplyExpression(left_element, right_integer)
             elif right_element_peek == 'VARIABLE':
                 right_variable = self.parse_variable_name()
                 self.parse_equal()
-                return prod.MultiplyExpression(left_element, right_variable)
+                return prod.multiply_expression.MultiplyExpression(left_element, right_variable)
         elif operator == 'MODULO SIGN':
             operator_sign = self.local_scanner.match('MODULO SIGN')
             right_element_peek = self.local_scanner.peek()
             if right_element_peek == 'INTEGER':
                 right_integer = self.parse_integer()
                 self.parse_equal()
-                return prod.ModuloExpression(left_element, right_integer)
+                return prod.modulo_expression.ModuloExpression(left_element, right_integer)
             elif right_element_peek == 'VARIABLE':
                 right_variable = self.parse_variable_name()
                 self.parse_equal()
-                return prod.ModuloExpression(left_element, right_variable)
-
-    def parse_variable_definition(self):
-        first_element_parsed = self.parse_variable_name()
-        equal = self.parse_equal()
-        if self.local_scanner.peek() == 'VARIABLE':
-            return self.parse_complex_variable_definition(first_element_parsed, equal)
-        integer = self.parse_integer()
-
-        return prod.VariableDefinition(first_element_parsed, equal, integer)
-
-    def parse_equal(self):
-        if self.local_scanner.peek() == 'EQUAL':
-            equal = self.local_scanner.match('EQUAL')
-            self._parse_error(equal)
-            return prod.Equal(equal)
-        else:
-            return
+                return prod.modulo_expression.ModuloExpression(left_element, right_variable)
