@@ -11,7 +11,8 @@ class RegexRules(object):
                 ((r"%"),                       TokenName.modulo_sign.value),
                 ((r"\s"),                      TokenName.space.value),
                 ((r"\="),                      TokenName.equal.value),
-                ((r"[a-z]"),                   TokenName.variable.value)]
+                ((r"[a-zA-Z][a-zA-Z0-9]*"),    TokenName.variable.value),
+                ]
 
     def add_regex_rule(self, regex: str, token: 'TokenName'):
         list_regex_rules.append(((regex), token))
