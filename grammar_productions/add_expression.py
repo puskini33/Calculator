@@ -1,4 +1,5 @@
 from grammar_productions.production import Production
+from string_scanner.scanner_string_segment import ScannedStringSegment
 
 
 class AddExpression(Production):

@@ -1,10 +1,11 @@
 from grammar_productions.production import Production
+from string_scanner.scanner_string_segment import ScannedStringSegment
 
 
 class Integer(Production):
 
-    def __init__(self, element):
-        self.element = int(element[1])
+    def __init__(self, element: ScannedStringSegment):
+        self.element = int(element.start_string)
 
     def __repr__(self):
         return f'Integer({self.element})'
