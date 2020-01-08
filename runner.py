@@ -5,7 +5,7 @@ from StringInterpreter import Interpreter
 from regex_tokens.regex_rules import RegexRules
 from world_state import WorldState
 
-code = ['13 * 7 =']
+code = ['a = 3']
 
 setup_scanner = Scanner(RegexRules.list_regex_rules, code)
 
