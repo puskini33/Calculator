@@ -58,18 +58,18 @@ class Scanner(object):
         try:
             if self.list_tokens[0].token == token_id:
                 removed = self.list_tokens.pop(0)
-                return [removed.token, removed.start_string]
+                return removed
         except None:
             return 'ERROR'
 
-    def peek(self) -> list or str:
+    def peek(self) -> ScannedStringSegment or str:
         """Given a list of possible tokens, returns which ones could work with match but does not
         remove it from the list."""
         if not self.done():
             self.ignore_ws()
-            return self.list_tokens[0].token
+            return self.list_tokens[0]
         else:
-            return 'ERROR'
+            return 'ERROR'  # TODO: remove ERROR
 
     def ignore_ws(self):
         """Functions pops the SPACE token. The lexical analyser must remove all spaces."""
@@ -85,7 +85,7 @@ class Scanner(object):
                 self.ignore_ws()
 
             tok = self.list_tokens[0]
-            if tok[0] != x:
+            if tok.token != x:
                 return False
             else:
                 self.list_tokens.pop(0)
