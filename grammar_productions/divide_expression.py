@@ -11,7 +11,8 @@ class DivideExpression(Production):
         return f'DivideExpression({self.left_number}, {self.right_number})'
 
     def analyze(self, world_state):
-        pass
+        self.left_number.analyze(world_state)
+        self.right_number.analyze(world_state)
 
     def interpret(self, world_state):
         division = self.left_number.interpret(world_state) / self.right_number.interpret(world_state)

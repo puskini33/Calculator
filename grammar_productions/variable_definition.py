@@ -9,10 +9,10 @@ class VariableDefinition(Production):
         self.number = number
 
     def __repr__(self):
-        return f'VariableDefinition({self.name}{self.equal}{self.number})'
+        return f'VariableDefinition({self.name} {self.equal} {self.number})'
 
     def analyze(self, world_state):
-        pass
+        world_state.variables[self.name] = self
 
     def interpret(self, world_state):
         pass
