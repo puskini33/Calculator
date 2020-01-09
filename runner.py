@@ -5,7 +5,9 @@ from StringInterpreter import Interpreter
 from regex_tokens.regex_rules import RegexRules
 from world_state import WorldState
 
-code = ['a = 3']
+code = ['a = 9',
+        'b = 10',
+        'a + b = ']
 
 setup_scanner = Scanner(RegexRules.list_regex_rules, code)
 
