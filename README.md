@@ -4,11 +4,11 @@
 * [ General information ](#general_info)
 * [Setup](#setup)
 * [Code Description](#code-descript)
-  * [Runner.py](#runner)
-  * [StringScanner.py](#scanner)
-  * [StringParser.py](#parser)
-  * [StringAnalyzer.py](#analyzer)
-  * [StringInterpreter.py](#interpreter)
+  * [runner.py](#runner)
+  * [string_scanner.py](#scanner)
+  * [string_parser.py](#parser)
+  * [string_analyzer.py](#analyzer)
+  * [string_interpreter.py](#interpreter)
 * [License](#license)
 
 <a name="general_info"></a>
@@ -23,70 +23,63 @@ The code can be run from the runner.py file.
 <a name="code-descript"></a>
 ## Code Description
 <a name="runner"></a>
-### **1. Runner.py**
+### **1. runner.py**
 
 #### 1.1. Input Format:
-Write the operation that you would like to calculate that follows the format: int1 operator_sign int2 (equal_sign).
+Write the operation that you would like to calculate that follows the format:
+
+A.&nbsp; integer operator integer (=) -> 18 % 6 =
+
+B.&nbsp; x = 5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = 7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x + y =
 
 #### 1.2. Constraints:
--∞ < int < ∞
-accepted operator_sign is part of the list = [+, -, \*, \/, %]
+You can introduce one operator_sign from the list -> [+, -, \*, \/, %]
 
 #### 1.3. Output Format:
 The result of the operation is printed on the console.
 
-
-The fundament of the code consists of 4 files: StringScanner.py, StringParser.py, StringAnalyzer.py, and StringInterpreter.py
+<br><br />
+The code goes through 4 phases: scanning, parsing, analyzing, interpreter.
 <a name="scanner"></a>
-### **2. StringScanner.py**
-The code in this file scans each element of the operation as a string and outputs a list of tuples under the format (Type_Element, Element, Begin_Number, End_Number)
-
-Type_Element = one from the list [Integer, Space, Plus, Minus, Division Sign, Modulo Sign, Equal, Multiplication Sign]
-Element = the element in the string
-Begin_Number and End_Number are the numbers where the element begins and ends in the string.
+### **2. string_scanner.py**
+The code in this file scans the introduced operation and outputs a list of &nbsp;'ScannerStringSegment'&nbsp; objects. Each object has the attributes:
+<br><br />
+token = one from the list [Integer, Space, Plus, Minus, Division Sign, Modulo Sign, Equal, Multiplication Sign, Variable] <br />
+start_string = the matched string <br />
+index and end_string are the numbers where the element begins and ends in the string.
 
 <a name="parser"></a>
-### **3. StringParser.py**
+### **3. string_parser.py**
 
-The code in this file follows a specific, pre-set grammar to match the elements in the scanned list (from StringScanner.py).
+The code in this file follows a specific, pre-set BNF Grammar to match the elements in the scanned list.
 
 
 
 *The BNF Grammar for this Calculator is:*
 
-root = operation/variable_definition
-
-operation = integer operator integer \*(equal) / variable_symbol operator variable_symbol
-
-variable_definition = variable_symbol equal integer\ variable_symbol equal variable_symbol operator variable_symbol
-
-integer = non-fractional numbers
-
-operator = one element of the list [+, -, \*, \/, %]
-
-equal = '='
-
-variable_symbol = letters/words
-
-letter = [A-Z; a-z]
-
-word = any word in the English language
-
-
+**root** = operation/variable_definition<br />
+**operation** = integer operator integer \*(equal) / variable_symbol operator variable_symbol<br />
+**variable_definition** = variable_symbol equal integer<br />
+**integer** = non-fractional numbers<br />
+**operator** = one element of the list [+, -, \*, \/, %]<br />
+**equal** = '='<br />
+**variable_symbol** = letters/words<br />
+**letter** = [A-Z; a-z]<br />
+**word** = any word in the English language<br />
 
 The output after this step is a `'parse tree of grammar production objects'` that reflects the grammar specified above (e.g., Operation(AddExpression(Integer(5), Integer(4))))
 
 <a name="analyzer"></a>
-### **4. StringAnalyzer.py**
+### **4. string_analyzer.py**
 
 The role of the code in this file is to search for, find, and correct semantic mistakes. The semantic mistakes are errors that are grammatically correct, but do not make sense as a whole.
 
-The file takes the 'parse tree of grammar production objects', analyzes each object in the expression, and outputs the analyzed  tree.
+The file takes the 'parse tree of grammar production objects', analyzes each object in the expression, and outputs the analyzed tree.
 
 <a name="interpreter"></a>
-### **5. StringInterpreter.py**
+### **5. string_interpreter.py**
 
 The role of the code in this file is to interpret the analyzed tree and to output the result of the operation.
 
 ## License <a name="license"></a>
-This project is licensed under the MIT License - see the LICENSE.md file for details
+This project is licensed under the MIT License - see the LICENSE.md file for details.

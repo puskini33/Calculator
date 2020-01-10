@@ -82,7 +82,7 @@ class Parser(object):
             self._parse_error(equal)
             self.local_scanner.parse_extra_space()
             return prod.equal.Equal(equal)
-        elif self.local_scanner.peek().token != TokenName.equal.value:  # in the case when there should be an equal there is another element
+        elif self.local_scanner.peek().token != TokenName.equal.value:  # when there should be an equal, but there is another element
             print('Syntax Error during Parsing: Invalid Grammar')
             exit(1)
         else:
