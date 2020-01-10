@@ -28,7 +28,7 @@ The code can be run from the runner.py file.
 #### 1.1. Input Format:
 Write the operation that you would like to calculate that follows the format:
 
-A.&nbsp; integer operator integer (=) -> 18 % 6 =
+A.&nbsp; integer operator integer (=) &nbsp;&nbsp;&nbsp;(e.g., 18 % 6 =) 
 
 B.&nbsp; x = 5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = 7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x + y =
 
@@ -39,7 +39,7 @@ You can introduce one operator_sign from the list -> [+, -, \*, \/, %]
 The result of the operation is printed on the console.
 
 <br><br />
-The code goes through 4 phases: scanning, parsing, analyzing, interpreter.
+The code goes through 4 phases: scanning, parsing, analyzing, interpreting.
 <a name="scanner"></a>
 ### **2. string_scanner.py**
 The code in this file scans the introduced operation and outputs a list of &nbsp;'ScannerStringSegment'&nbsp; objects. Each object has the attributes:
@@ -51,14 +51,14 @@ index and end_string are the numbers where the element begins and ends in the st
 <a name="parser"></a>
 ### **3. string_parser.py**
 
-The code in this file follows a specific, pre-set BNF Grammar to match the elements in the scanned list.
+The code in this file displays the specific, pre-set BNF Grammar that is followed to match the elements in the scanned list.
 
 
 
 *The BNF Grammar for this Calculator is:*
 
 **root** = operation/variable_definition<br />
-**operation** = integer operator integer \*(equal) / variable_symbol operator variable_symbol<br />
+**operation** = integer operator integer (equal) / variable_symbol operator variable_symbol<br />
 **variable_definition** = variable_symbol equal integer<br />
 **integer** = non-fractional numbers<br />
 **operator** = one element of the list [+, -, \*, \/, %]<br />
