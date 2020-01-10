@@ -1,6 +1,6 @@
 # Calculator
 
-# Table of Contents
+## Table of Contents
 * [ General information ](#general_info)
 * [Setup](#setup)
 * [Code Description](#code-descript)
@@ -17,12 +17,12 @@ In this repository there is a simple calculator that takes as input an operation
 
 For example, given the operation "3 * 6 =" this is a multiplication operation. The result of this operation is 18. The result is printed in the console.
 
-
+<a name="setup"></a>
 ## Setup
 The code can be run from the runner.py file.
-
+<a name="code-descript"></a>
 ## Code Description
-
+<a name="runner"></a>
 ### **1. Runner.py**
 
 #### 1.1. Input Format:
@@ -37,7 +37,7 @@ The result of the operation is printed on the console.
 
 
 The fundament of the code consists of 4 files: StringScanner.py, StringParser.py, StringAnalyzer.py, and StringInterpreter.py
-
+<a name="scanner"></a>
 ### **2. StringScanner.py**
 The code in this file scans each element of the operation as a string and outputs a list of tuples under the format (Type_Element, Element, Begin_Number, End_Number)
 
@@ -45,7 +45,7 @@ Type_Element = one from the list [Integer, Space, Plus, Minus, Division Sign, Mo
 Element = the element in the string
 Begin_Number and End_Number are the numbers where the element begins and ends in the string.
 
-
+<a name="parser"></a>
 ### **3. StringParser.py**
 
 The code in this file follows a specific, pre-set grammar to match the elements in the scanned list (from StringScanner.py).
@@ -76,13 +76,14 @@ word = any word in the English language
 
 The output after this step is a `'parse tree of grammar production objects'` that reflects the grammar specified above (e.g., Operation(AddExpression(Integer(5), Integer(4))))
 
-
+<a name="analyzer"></a>
 ### **4. StringAnalyzer.py**
 
 The role of the code in this file is to search for, find, and correct semantic mistakes. The semantic mistakes are errors that are grammatically correct, but do not make sense as a whole.
 
 The file takes the 'parse tree of grammar production objects', analyzes each object in the expression, and outputs the analyzed  tree.
 
+<a name="interpreter"></a>
 ### **5. StringInterpreter.py**
 
 The role of the code in this file is to interpret the analyzed tree and to output the result of the operation.
