@@ -1,7 +1,7 @@
 # Calculator
 
-## Table of Contents
-* [General information](#general-info)
+# Table of Contents
+* [ General information ](#general_info)
 * [Setup](#setup)
 * [Code Description](#code-descript)
   * [Runner.py](#runner)
@@ -11,7 +11,8 @@
   * [StringInterpreter.py](#interpreter)
 * [License](#license)
 
-## [General Information]
+<a name="general_info"></a>
+## General Information 
 In this repository there is a simple calculator that takes as input an operation and outputs the result of the operation.
 
 For example, given the operation "3 * 6 =" this is a multiplication operation. The result of this operation is 18. The result is printed in the console.
@@ -86,5 +87,5 @@ The file takes the 'parse tree of grammar production objects', analyzes each obj
 
 The role of the code in this file is to interpret the analyzed tree and to output the result of the operation.
 
-## License
+## License <a name="license"></a>
 This project is licensed under the MIT License - see the LICENSE.md file for details
