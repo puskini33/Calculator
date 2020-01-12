@@ -14,6 +14,7 @@ class VariableName(Production):
     def analyze(self, world_state: WorldState):
         pass
 
-    def call(self, world_state: WorldState, integer):
-        scope = world_state.clone()
-        scope.variables[self] = integer
+    def interpret(self, world_state: WorldState):
+        ref = world_state.variables.get(self.name)  # Int()
+        print(ref)
+        return ref.interpret(world_state)

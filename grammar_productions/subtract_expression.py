@@ -1,20 +1,29 @@
 from grammar_productions.production import Production
+from grammar_productions.integer import Integer
 
 
 class SubtractExpression(Production):
 
-    def __init__(self, left_number, right_number):
-        self.left_number = left_number  # 'MINUS'
-        self.right_number = right_number
+    def __init__(self, left_element, right_element):
+        self.left_element = left_element  # 'MINUS'
+        self.right_element = right_element
 
     def __repr__(self):
-        return f'SubtractExpression({self.left_number}, {self.right_number})'
+        return f'SubtractExpression({self.left_element}, {self.right_element})'
 
     def analyze(self, world_state):
-        self.left_number.analyze(world_state)
-        self.right_number.analyze(world_state)
+        self.left_element.analyze(world_state)
+        self.right_element.analyze(world_state)
 
     def interpret(self, world_state):
-        substraction = self.left_number.interpret(world_state) - self.right_number.interpret(world_state)
-        print(substraction)
-        return substraction
+        if type(self.left_element) == Integer:
+            subtract = self.left_element.interpret(world_state) - self.right_element.interpret(world_state)
+            print(subtract)
+            return subtract
+        else:
+            integer_object_left = world_state.variables.get(self.left_element.name)
+            integer_left = integer_object_left.interpret(world_state)
+            integer_object_right = world_state.variables.get(self.right_element.name)
+            integer_right = integer_object_right.interpret(world_state)
+            print(integer_left - integer_right)
+            return integer_left - integer_right
