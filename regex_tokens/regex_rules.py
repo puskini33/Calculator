@@ -13,6 +13,3 @@ class RegexRules(object):
                 ((r"\="),                      TokenName.equal.value),
                 ((r"[a-zA-Z][a-zA-Z0-9]*"),    TokenName.variable.value),
                 ]
-
-    def add_regex_rule(self, regex: str, token: 'TokenName'):
-        list_regex_rules.append(((regex), token))

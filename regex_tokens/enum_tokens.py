@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class TokenName(Enum):  # TODO: Could I add new values to this class?
+class TokenName(Enum):
     integer = 'INTEGER'
     plus = 'PLUS'
     variable = 'VARIABLE'
