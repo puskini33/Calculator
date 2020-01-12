@@ -1,13 +1,29 @@
 from string_scanner.scanner import Scanner
-from StringParser import Parser
-from StringAnalyzer import Analyzer
-from StringInterpreter import Interpreter
+from string_parser import Parser
+from string_analyzer import Analyzer
+from string_interpreter import Interpreter
 from regex_tokens.regex_rules import RegexRules
 from world_state import WorldState
 
-code = ['a = 9',
-        'b = 10',
-        'a + b = ']
+code = []
+
+
+def ask_user():
+    user_input = input('Please introduce the operation you would like to calculate: ')
+    code.append(user_input)
+
+
+def ask_user_again():
+    second_user_input = input(' Would you like to introduce a new operation? Yes/No:  ')
+    if second_user_input == 'Yes':
+        ask_user()
+        third_user_input = input(' Would you like to introduce a new operation? Yes/No:  ')
+        if third_user_input == 'Yes':
+            ask_user()
+
+
+ask_user()
+ask_user_again()
 
 setup_scanner = Scanner(RegexRules.list_regex_rules, code)
 
