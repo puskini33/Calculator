@@ -75,17 +75,22 @@ class Parser(object):
         self._parse_error(name_variable)
         return prod.variable_name.VariableName(name_variable)
 
-    def parse_equal(self) -> prod.equal.Equal or None:
+    def parse_equal(self) -> prod.equal.Equal or None:  # TODO: Figure it out all possibilities again here.
         """equal"""
-        if self.local_scanner.peek().token == TokenName.equal.value:
-            equal = self.local_scanner.match(TokenName.equal.value)
-            self._parse_error(equal)
-            self.local_scanner.parse_extra_space()
-            return prod.equal.Equal(equal)
-        elif self.local_scanner.peek().token != TokenName.equal.value:  # when there should be an equal, but there is another element
-            print('Syntax Error during Parsing: Invalid Grammar')
-            exit(1)
-        else:
+        try:
+            if self.local_scanner.peek().token == TokenName.equal.value:
+                equal = self.local_scanner.match(TokenName.equal.value)
+                self._parse_error(equal)
+                self.local_scanner.parse_extra_space()
+                return prod.equal.Equal(equal)
+            elif self.local_scanner.peek().token != TokenName.equal.value:  # when there should be an equal, but there is another element
+                print('Syntax Error during Parsing: Invalid Grammar at the end of the operation.')
+                exit(1)
+            else:
+                return
+        except AttributeError:  # In case peek() cannot be done because there is no element left in the scanner
+            return
+        except IndexError:  # In case the last element in the scanner is SPACE, which is popped, leaving no more element in the scanner
             return
 
     def evaluate_type_operation(self, operator: ScannedStringSegment, left_element: prod.variable_name.VariableName or prod.integer.Integer):
