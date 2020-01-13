@@ -14,11 +14,11 @@ def ask_user():
 
 
 def ask_user_again():
-    second_user_input = input(' Would you like to introduce a new operation? Yes/No:  ')
-    if second_user_input == 'Yes':
+    second_user_input = input(' Would you like to introduce a new operation? yes/no:  ')
+    if second_user_input == 'yes':
         ask_user()
-        third_user_input = input(' Would you like to introduce a new operation? Yes/No:  ')
-        if third_user_input == 'Yes':
+        third_user_input = input(' Would you like to introduce a new operation? yes/no:  ')
+        if third_user_input == 'yes':
             ask_user()
 
 
@@ -29,7 +29,6 @@ setup_scanner = Scanner(RegexRules.list_regex_rules, code)
 
 setup_parser = Parser(setup_scanner)
 parsed_string = setup_parser.parse()
-print(parsed_string)
 
 world_state = WorldState()
 

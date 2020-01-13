@@ -69,14 +69,6 @@ class Scanner(object):
         while self.list_tokens[0].token == TokenName.space.value:
             self.list_tokens.pop(0)
 
-    def parse_extra_space(self):
-        """Function removes extra multiple spaces until there are no more elements to match."""
-        while not self.done():
-            if self.list_tokens[0].token == TokenName.space.value:
-                self.list_tokens.pop(0)
-            else:
-                return
-
     def skip(self, *what: str or tuple) -> bool:
         """Function evaluates if the given element equals the first element
         in the list of tokens. If YES, it returns TRUE, if NOT, it pops the first element and
